@@ -30,7 +30,7 @@ router.post("/register", async (req, res, next) => {
       .status(200)
       .cookie("access_token", token, {
         httpOnly: true,
-        maxAge: 36000
+        maxAge: 3600000
       })
       .send(user.dataValues);
   } catch (error) {
@@ -71,7 +71,7 @@ router.post("/login", async (req, res, next) => {
         .status(200)
         .cookie("access_token", token, {
           httpOnly: true,
-          maxAge: 36000
+          maxAge: 3600000
         })
         .send(user.dataValues);
     }
