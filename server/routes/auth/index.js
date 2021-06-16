@@ -6,7 +6,7 @@ router.post("/register", async (req, res, next) => {
   try {
     // expects {username, email, password} in req.body
     const { username, password, email } = req.body;
-
+    console.log("test");
     if (!username || !password || !email) {
       return res
         .status(400)
@@ -26,10 +26,13 @@ router.post("/register", async (req, res, next) => {
       process.env.SESSION_SECRET,
       { expiresIn: 86400 }
     );
-    res.json({
-      ...user.dataValues,
-      token,
-    });
+    res
+      .status(200)
+      .cookie("access_token", token, {
+        httpOnly: true,
+        maxAge: 36000
+      })
+      .send(user.dataValues);
   } catch (error) {
     if (error.name === "SequelizeUniqueConstraintError") {
       return res.status(401).json({ error: "User already exists" });
@@ -64,10 +67,13 @@ router.post("/login", async (req, res, next) => {
         process.env.SESSION_SECRET,
         { expiresIn: 86400 }
       );
-      res.json({
-        ...user.dataValues,
-        token,
-      });
+      res
+        .status(200)
+        .cookie("access_token", token, {
+          httpOnly: true,
+          maxAge: 36000
+        })
+        .send(user.dataValues);
     }
   } catch (error) {
     next(error);
