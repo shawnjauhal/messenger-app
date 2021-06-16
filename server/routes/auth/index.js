@@ -6,7 +6,6 @@ router.post("/register", async (req, res, next) => {
   try {
     // expects {username, email, password} in req.body
     const { username, password, email } = req.body;
-    console.log("test");
     if (!username || !password || !email) {
       return res
         .status(400)
@@ -83,6 +82,7 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.delete("/logout", (req, res, next) => {
+  res.clearCookie('access_token');
   res.sendStatus(204);
 });
 
