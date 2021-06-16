@@ -9,9 +9,6 @@ import {
 import { gotUser, setFetchingStatus } from "../user";
 axios.defaults.withCredentials = true;
 
-axios.interceptors.request.use(async function (config) {
-  return config;
-});
 
 // USER THUNK CREATORS
 
