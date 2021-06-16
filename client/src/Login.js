@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
 import LeftLogin from "./components/LeftLogin.js";
+import TopLogin from "./components/TopLogin.js";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
@@ -30,7 +31,7 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: ["Open Sans", "sans-serif"].join(","),
-    weight: "600"
+    weight: "600",
   },
 });
 
@@ -75,7 +76,6 @@ const Login = (props) => {
                     </Button>
                   </Box>
                 </Grid>
-
                 <Box mt={9} width="70%">
                   <form onSubmit={handleLogin}>
                     <Grid container direction={"column"} spacing={4}>

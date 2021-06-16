@@ -70,8 +70,3 @@ export default class LeftLogin extends Component {
     );
   }
 }
-
-/*
-<SvgIcon style={{ fontSize: 115 }} viewBox="0 0 100 100">
-                        
-                      </SvgIcon>*/
