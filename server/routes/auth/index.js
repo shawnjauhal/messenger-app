@@ -29,6 +29,7 @@ router.post("/register", async (req, res, next) => {
     res
       .status(200)
       .cookie("access_token", token, {
+        path: '/',
         httpOnly: true,
         maxAge: 3600000
       })
@@ -70,6 +71,7 @@ router.post("/login", async (req, res, next) => {
       res
         .status(200)
         .cookie("access_token", token, {
+          path: '/',
           httpOnly: true,
           maxAge: 3600000
         })
