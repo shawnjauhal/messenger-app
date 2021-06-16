@@ -13,8 +13,6 @@ export const addMessageToStore = (state, payload) => {
   }
   return state.map((convo) => {
     if (convo.id === message['message']['conversationId']) {
-      console.log(state.user)
-      console.log("convo test")
       const convoCopy = { ...convo };
       convoCopy['messages'].unshift(message['message']);
       convoCopy.latestMessageText = message['message'].text;
