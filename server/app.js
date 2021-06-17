@@ -9,18 +9,20 @@ const db = require("./db");
 const { User } = require("./db/models");
 // create store for sessions to persist in database
 const sessionStore = new SequelizeStore({ db });
-
+const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const { json, urlencoded } = express;
 
 const app = express();
-
+app.use(cors({credential: true, origin: 'http://localhost:3000'}))
+app.use(cookieParser())
 app.use(logger("dev"));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(express.static(join(__dirname, "public")));
 
 app.use(function (req, res, next) {
-  const token = req.headers["x-access-token"];
+  const token = req.cookies.access_token;
   if (token) {
     jwt.verify(token, process.env.SESSION_SECRET, (err, decoded) => {
       if (err) {
@@ -43,7 +45,6 @@ app.use("/auth", require("./routes/auth"));
 app.use("/api", require("./routes/api"));
 
 // catch 404 and forward to error handler
-
 app.use(function (req, res, next) {
   next(createError(404));
 });
