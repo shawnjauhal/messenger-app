@@ -10,13 +10,11 @@ router.post("/", async (req, res, next) => {
     }
     const senderId = req.user.id;
     const { recipientId, text, conversationId, sender } = req.body;
-
     // if we don't have conversation id, find a conversation to make sure it doesn't already exist
     let conversation = await Conversation.findConversation(
       senderId,
       recipientId
     );
-
     if (!conversation) {
       // create conversation
       conversation = await Conversation.create({
@@ -32,6 +30,10 @@ router.post("/", async (req, res, next) => {
       text,
       conversationId: conversation.id,
     });
+    console.error(message.senderId)
+    console.error(message.conversationId)
+    console.error(message.text)
+    console.error(message)
     res.json({ message, sender });
   } catch (error) {
     next(error);

@@ -9,12 +9,6 @@ import {
 import { gotUser, setFetchingStatus } from "../user";
 import Cookies from "universal-cookie";
 
-axios.interceptors.request.use(async function (config) {
-  const cookies = new Cookies();
-  const token = cookies.get("messenger-token");
-  config.headers["x-access-token"] = token;
-  return config;
-});
 
 // USER THUNK CREATORS
 
@@ -36,8 +30,6 @@ export const fetchUser = () => async (dispatch) => {
 export const register = (credentials) => async (dispatch) => {
   try {
     const { data } = await axios.post("/auth/register", credentials);
-    const cookies = new Cookies();
-    cookies.set("messenger-token", data.token, { path: "/" });
     dispatch(gotUser(data));
     socket.emit("go-online", data.id);
   } catch (error) {
@@ -49,8 +41,6 @@ export const register = (credentials) => async (dispatch) => {
 export const login = (credentials) => async (dispatch) => {
   try {
     const { data } = await axios.post("/auth/login", credentials);
-    const cookies = new Cookies();
-    cookies.set("messenger-token", data.token, { path: "/" });
     dispatch(gotUser(data));
     socket.emit("go-online", data.id);
   } catch (error) {
@@ -62,9 +52,6 @@ export const login = (credentials) => async (dispatch) => {
 export const logout = (id) => async (dispatch) => {
   try {
     await axios.delete("/auth/logout");
-
-    const cookies = new Cookies();
-    cookies.remove("messenger-token");
     dispatch(gotUser({}));
     socket.emit("logout", id);
   } catch (error) {
@@ -85,14 +72,20 @@ export const fetchConversations = () => async (dispatch) => {
 
 const saveMessage = async (body) => {
   const { data } = await axios.post("/api/messages", body);
+  console.log("dddddddaaaaaaaaaaaatttttttta")
+  console.log(data);
+  console.log("messsssssssssaggggggggggggge")
+  console.log(data.message)
+  console.log("done")
+
   return data;
 };
 
 const sendMessage = (data, message, body) => {
   socket.emit("new-message", {
-    message: message,
+    message: data.message,
     recipientId: body.recipientId,
-    sender: message['sender'],
+    sender: data.sender,
   });
 };
 
@@ -101,14 +94,14 @@ const sendMessage = (data, message, body) => {
 export const postMessage = (body) => (dispatch) => {
   try {
     const data = saveMessage(body);
-
+    
     data.then((message) => {
       if (!body.conversationId) {
-        dispatch(addConversation(body.recipientId, message));
+        dispatch(addConversation(body.recipientId, data.message));
       } else {
-        dispatch(setNewMessage(message));
+        dispatch(setNewMessage(data.message));
       }
-      sendMessage(data, message, body);
+      sendMessage(data, body);
     });
   } catch (error) {
     console.error(error);
