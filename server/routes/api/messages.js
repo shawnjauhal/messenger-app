@@ -30,10 +30,6 @@ router.post("/", async (req, res, next) => {
       text,
       conversationId: conversation.id,
     });
-    console.error(message.senderId)
-    console.error(message.conversationId)
-    console.error(message.text)
-    console.error(message)
     res.json({ message, sender });
   } catch (error) {
     next(error);
