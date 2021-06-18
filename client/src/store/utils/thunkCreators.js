@@ -7,7 +7,8 @@ import {
   setSearchedUsers,
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
-import Cookies from "universal-cookie";
+axios.defaults.withCredentials = true;
+
 
 
 // USER THUNK CREATORS
