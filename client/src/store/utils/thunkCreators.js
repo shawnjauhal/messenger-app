@@ -10,6 +10,7 @@ import { gotUser, setFetchingStatus } from "../user";
 axios.defaults.withCredentials = true;
 
 
+
 // USER THUNK CREATORS
 
 export const fetchUser = () => async (dispatch) => {
@@ -75,11 +76,11 @@ const saveMessage = async (body) => {
   return data;
 };
 
-const sendMessage = (data, body) => {
+const sendMessage = (data, message, body) => {
   socket.emit("new-message", {
-    message: data.message,
+    message: message,
     recipientId: body.recipientId,
-    sender: data.sender,
+    sender: message['sender'],
   });
 };
 
@@ -88,14 +89,15 @@ const sendMessage = (data, body) => {
 export const postMessage = (body) => (dispatch) => {
   try {
     const data = saveMessage(body);
-
-    if (!body.conversationId) {
-      dispatch(addConversation(body.recipientId, data.message));
-    } else {
-      dispatch(setNewMessage(data.message));
-    }
-
-    sendMessage(data, body);
+    
+    data.then((message) => {
+      if (!body.conversationId) {
+        dispatch(addConversation(body.recipientId, message));
+      } else {
+        dispatch(setNewMessage( message));
+      }
+      sendMessage(data, message, body);
+    });
   } catch (error) {
     console.error(error);
   }
