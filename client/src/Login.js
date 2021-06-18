@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
 import LeftLogin from "./components/LeftLogin.js";
+import TopLogin from "./components/TopLogin.js";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
@@ -58,23 +59,12 @@ const Login = (props) => {
           <Box ml={5} p={3} width="100%" pb={15}>
             <Grid container item justify="flex-end">
               <Box width="100%">
-                <Grid container item justify="flex-end">
-                  <Box m={3} mr={8}>
-                    <Typography color="textSecondary">
-                      Don't have an account?
-                    </Typography>
-                  </Box>
-                  <Box mr={7} mt={2.4}>
-                    <Button
-                      variant="text"
-                      color="primary"
-                      justify="right"
-                      onClick={() => history.push("/register")}
-                    >
-                      Register
-                    </Button>
-                  </Box>
-                </Grid>
+                <TopLogin
+                  message="Don't have an account?"
+                  buttonmsg="Register"
+                  history={history}
+                  url="/register"
+                />
                 <Box mt={9} width="70%">
                   <form onSubmit={handleLogin}>
                     <Grid container direction={"column"} spacing={4}>

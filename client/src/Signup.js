@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { register } from "./store/utils/thunkCreators";
 import LeftLogin from "./components/LeftLogin.js";
+import TopLogin from "./components/TopLogin.js";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
@@ -23,15 +24,15 @@ const theme = createMuiTheme({
       main: "#FFFFFF",
     },
     textPrimary: {
-      main: "#000000"
-    }, 
+      main: "#000000",
+    },
     textSecondary: {
-      main: "#C0C0C0" 	
-    }
+      main: "#C0C0C0",
+    },
   },
   typography: {
     fontFamily: ["Open Sans", "sans-serif"].join(","),
-    weight: "600"
+    weight: "600",
   },
 });
 
@@ -65,29 +66,19 @@ const Login = (props) => {
         <LeftLogin />
         <Grid item sm={7} xs={12}>
           <Box ml={5} p={3} width="100%" pb={15}>
-            <Grid container item justify="flex-end">
-              <Box m={3} mr={8}>
-                <Typography color="textSecondary">Already have an account?</Typography>
-              </Box>
-              <Box mr={7} mt={2.4}>
-                <Button
-                  variant="text"
-                  color="primary"
-                  justify="right"
-                  onClick={() => history.push("/login")}
-                >
-                  Login
-                </Button>
-              </Box>
-            </Grid>
+            <TopLogin
+                  message="Already have an account?"
+                  buttonmsg="Login"
+                  history={history}
+                  url="/login"
+                />
+
             <Box mt={9} width="70%">
               <form onSubmit={handleRegister}>
                 <Grid container direction={"column"} spacing={4}>
                   <Grid item>
                     <Typography variant="h4">Create an account.</Typography>
                   </Grid>
-
-
                   <Grid item>
                     <FormControl fullWidth>
                       <TextField
