@@ -3,7 +3,6 @@ import {
   Grid,
   Box,
   Typography,
-  TextField,
   CardMedia,
   Icon,
 } from "@material-ui/core";
@@ -11,16 +10,6 @@ import bkg from "../images/bg-img.png";
 import bubble from "../images/bubble.svg";
 import { createMuiTheme } from "@material-ui/core/styles";
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#3A8DFF",
-    },
-    secondary: {
-      main: "#FFFFFF",
-    },
-  },
-});
 
 const cardStyles = {
   media: {

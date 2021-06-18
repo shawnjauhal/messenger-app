@@ -11,7 +11,6 @@ import {
 } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
 import LeftLogin from "./components/LeftLogin.js";
-import TopLogin from "./components/TopLogin.js";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
