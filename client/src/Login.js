@@ -10,6 +10,30 @@ import {
   TextField,
 } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
+import LeftLogin from "./components/LeftLogin.js";
+import TopLogin from "./components/TopLogin.js";
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#3A8DFF",
+    },
+    secondary: {
+      main: "#FFFFFF",
+    },
+    textPrimary: {
+      main: "#000000",
+    },
+    textSecondary: {
+      main: "#C0C0C0",
+    },
+  },
+  typography: {
+    fontFamily: ["Open Sans", "sans-serif"].join(","),
+    weight: "600",
+  },
+});
 
 const Login = (props) => {
   const history = useHistory();
@@ -28,41 +52,68 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justify="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to register?</Typography>
-          <Button onClick={() => history.push("/register")}>Register</Button>
-        </Grid>
-        <form onSubmit={handleLogin}>
-          <Grid>
-            <Grid>
-              <FormControl margin="normal" required>
-                <TextField
-                  aria-label="username"
-                  label="Username"
-                  name="username"
-                  type="text"
+    <ThemeProvider theme={theme}>
+      <Grid container direction={"row"} alignItems={"flex-start"}>
+        <LeftLogin />
+        <Grid item sm={7} xs={12}>
+          <Box ml={5} p={3} width="100%" pb={15}>
+            <Grid container item justify="flex-end">
+              <Box width="100%">
+                <TopLogin
+                  message="Don't have an account?"
+                  buttonmsg="Register"
+                  history={history}
+                  url="/register"
                 />
-              </FormControl>
+                <Box mt={9} width="70%">
+                  <form onSubmit={handleLogin}>
+                    <Grid container direction={"column"} spacing={9}>
+                      <Grid item>
+                        <Typography variant="h4">Welcome Back!</Typography>
+                      </Grid>
+                      
+                      <Grid item>
+                        <FormControl fullWidth required>
+                          <TextField
+                            aria-label="username"
+                            label="Username"
+                            name="username"
+                            type="text"
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item>
+                        <FormControl fullWidth required>
+                          <TextField
+                            label="password"
+                            aria-label="password"
+                            type="password"
+                            name="password"
+                          />
+                        </FormControl>
+                      </Grid>
+
+                      <Box mt={5}>
+                        <Grid container justify={"center"}>
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            size="large"
+                            color="primary"
+                          >
+                            Login
+                          </Button>
+                        </Grid>
+                      </Box>
+                    </Grid>
+                  </form>
+                </Box>
+              </Box>
             </Grid>
-            <FormControl margin="normal" required>
-              <TextField
-                label="password"
-                aria-label="password"
-                type="password"
-                name="password"
-              />
-            </FormControl>
-            <Grid>
-              <Button type="submit" variant="contained" size="large">
-                Login
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Box>
-    </Grid>
+          </Box>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
   );
 };
 
