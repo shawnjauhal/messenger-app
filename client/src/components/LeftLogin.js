@@ -5,8 +5,8 @@ import bubble from "../images/bubble.svg";
 
 const cardStyles = {
   media: {
-    height: "700px",
-    width: "425px",
+    height: "725px",
+    width: "440px",
   },
 };
 

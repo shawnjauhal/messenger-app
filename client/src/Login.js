@@ -67,10 +67,11 @@ const Login = (props) => {
                 />
                 <Box mt={9} width="70%">
                   <form onSubmit={handleLogin}>
-                    <Grid container direction={"column"} spacing={4}>
+                    <Grid container direction={"column"} spacing={9}>
                       <Grid item>
                         <Typography variant="h4">Welcome Back!</Typography>
                       </Grid>
+                      
                       <Grid item>
                         <FormControl fullWidth required>
                           <TextField
@@ -92,7 +93,7 @@ const Login = (props) => {
                         </FormControl>
                       </Grid>
 
-                      <Box mt={8}>
+                      <Box mt={5}>
                         <Grid container justify={"center"}>
                           <Button
                             type="submit"
