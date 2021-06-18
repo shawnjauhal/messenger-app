@@ -3,19 +3,19 @@ export const addMessageToStore = (state, payload) => {
   // if sender isn't null, that means the message needs to be put in a brand new convo
   if (sender !== null) {
     const newConvo = {
-      id: message['message']['conversationId'],
-      owner: [message['message']['senderId']],
-      otherUser: message['sender'],
-      messages: [message['message']],
+      id: message.message.conversationId,
+      owner: [message.message.senderId],
+      otherUser: message.sender,
+      messages: [message.message],
     };
-    newConvo.latestMessageText = message['message'].text;
+    newConvo.latestMessageText = message.message.text;
     return [newConvo, ...state];
   }
   return state.map((convo) => {
-    if (convo.id === message['message']['conversationId']) {
+    if (convo.id === message.message.conversationId) {
       const convoCopy = { ...convo };
-      convoCopy['messages'].push(message['message']);
-      convoCopy.latestMessageText = message['message'].text;
+      convoCopy.messages.push(message.message);
+      convoCopy.latestMessageText = message.message.text;
       return convoCopy;
     } else {
       return convo;
@@ -71,9 +71,9 @@ export const addNewConvoToStore = (state, recipientId, message) => {
   return state.map((convo) => {
     if (convo.otherUser.id === recipientId) {
       const newConvo = { ...convo };
-      newConvo['id'] = message['message']['conversationId'];
-      newConvo['messages'].push(message['message']);
-      newConvo['latestMessageText'] = message['message'].text;
+      newConvo['id'] = message.message.conversationId;
+      newConvo.messages.push(message.message);
+      newConvo['latestMessageText'] = message.message.text;
       return newConvo;
     } else {
       return convo;
